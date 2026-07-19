@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+#dbt build files
+# dbt build files
+aqipulse_dbt/target/
+aqipulse_dbt/dbt_packages/
+aqipulse_dbt/profiles.yml
