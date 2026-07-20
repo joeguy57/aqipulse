@@ -9,3 +9,6 @@
 - Looker Studio — interactive air quality dashboard
 ## Status
 In progress
+
+## Bugs:
+- There were null values being inserted and instead of dealing with it later we removed them now.

@@ -51,7 +51,7 @@ TARGET_PARAMS = {"pm25", "pm10", "no2", "o3", "so2", "co"}
 # The 12 cities: name, country, lat, lon
 CITIES = [
     {"city": "Los Angeles", "country" : "US", "lat": 34.0522, "lon": -118.2437},
-    {"city": "Mexico City", "country" : "MX", "lat": 19.4326, "lon": -99.1332},
+    {"city": "Toronto", "country" : "CA", "lat": 43.6532, "lon": -79.3832},
     {"city": "Sao Paulo", "country" : "BR", "lat": -23.5505, "lon": -46.6333},
     {"city": "London", "country" : "GB", "lat": 51.5074, "lon": -0.1278},
     {"city": "Paris", "country" : "FR", "lat": 48.8566, "lon": 2.3522},
@@ -168,11 +168,14 @@ def insert_dataframe(conn, df: pd.DataFrame, city: str):
         chunk = df.iloc[start:start + batch]
         values_list = []
         for _, row in chunk.iterrows():
-            values_list.append(
-                f"('{row.date}', '{row.city}', '{row.country}', {sql_val(row.location_id)}, "
-                f"'{row.location_name}', {sql_val(row.latitude)}, {sql_val(row.longitude)}, "
-                f"'{row.parameter}', {sql_val(row.value)}, '{row.unit}')"
-            )
+            if not(pd.isna(row.value) or pd.isna(row.latitude) or pd.isna(row.longitude) or pd.isna(row.location_id)):
+                values_list.append(
+                    f"('{row.date}', '{row.city}', '{row.country}', {sql_val(row.location_id)}, "
+                    f"'{row.location_name}', {sql_val(row.latitude)}, {sql_val(row.longitude)}, "
+                    f"'{row.parameter}', {sql_val(row.value)}, '{row.unit}')"
+                )
+            else:
+                chunk -= 1
         values_str = ",\n".join(values_list)
         cursor.execute(f"INSERT INTO {table} VALUES {values_str}")   # <-- wrong indent
         inserted += len(chunk)
