@@ -1,0 +1,14 @@
+version: 2
+sources:
+    - name: aqipulse
+      schema: aqipulse
+      tables:
+        - name: silver_air_quality
+          description: "Cleaned daily air quality readings with derived metrics"
+          columns:
+            - name: city
+              tests: [not_null]
+            - name: date
+              tests: [not_null]
+            - name: value
+              tests: [not_null]
