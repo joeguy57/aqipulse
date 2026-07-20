@@ -11,4 +11,4 @@
 In progress
 
 ## Bugs:
-- There were null values being inserted and instead of dealing with it later we removed them now.
+- There were null values being inserted and instead of dealing with it later we removed them now. nulls could've been caused by sensor maintainence or scheduled down times.
